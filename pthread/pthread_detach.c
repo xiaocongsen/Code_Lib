@@ -3,7 +3,7 @@
 #include<unistd.h>
 void *phread_fun(void *arg)
 {
-	while(1)
+	while(0)
 	{
 		printf("%s\n",(char*)arg);	
 		usleep(100000);
