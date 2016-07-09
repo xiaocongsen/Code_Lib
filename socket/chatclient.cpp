@@ -1,11 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<sys/socket.h>
-#include<sys/types.h>
-#include<arpa/inet.h>
-#include<netinet/in.h>
-#include<signal.h>
+#include"../include.h"
 int main()
 {
 	int domain = AF_INET;
@@ -21,7 +14,7 @@ int main()
 	{
 		struct sockaddr_in addr;
 		addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-		addr.sin_port = htons(19999);
+		addr.sin_port = htons(9999);
 		addr.sin_family = AF_INET;
 		socklen_t addrlen = sizeof(addr);
 		int ret = connect(sockfd, (struct sockaddr*)&addr, addrlen);
@@ -43,6 +36,7 @@ int main()
 						ret = read(sockfd, buf, sizeof(buf));
 						if(ret < 0)
 						{
+							if(errno == EINTR)
 							perror("read error");
 							kill(getppid(),SIGKILL);
 							return ret;
@@ -55,15 +49,16 @@ int main()
 						}
 						else
 						{
-							printf("%s: %s", inet_ntoa(addr.sin_addr), buf);	
+							printf("%s: %s\n", inet_ntoa(addr.sin_addr), buf);	
 						}
 					}
 				}
 				else
 				{
-					fgets(buf, sizeof(buf), stdin);
+					//fgets(buf, sizeof(buf), stdin);
 					//system("clear");
-					ret = write(sockfd, buf, sizeof(buf));
+					usleep(1000);
+					ret = write(sockfd, "xxbuf", sizeof("xxbuf"));
 					if(ret < 0)
 					{
 						perror("write errof");

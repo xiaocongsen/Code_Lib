@@ -1,11 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<signal.h>
-#include<sys/socket.h>
-#include<unistd.h>
-#include<sys/types.h>
-#include<arpa/inet.h>
-#include<netinet/in.h>
+#include"../include.h"
 int main()
 {
 	int domain = AF_INET; //协议族
