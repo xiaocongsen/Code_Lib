@@ -13,6 +13,7 @@ void Mysig_fun(int, siginfo_t *, void *)
 }
 int main()
 {
+	printf("%lu\n", sizeof(sigset_t));
 	struct sigaction sig_act;
 	sig_act.sa_sigaction = Mysig_fun;
 	sigemptyset(&sig_act.sa_mask);
@@ -35,10 +36,8 @@ int main()
 		{
 			union sigval val;
 			val.sival_int = 0; 
-			sigqueue(getppid(), SIGUSR1);
-			usleep(10);
+			sigqueue(getppid(), SIGUSR1, val);
 			i--;
-			printf("%d\n",i);
 		}
 	}
 	else
@@ -48,9 +47,7 @@ int main()
 			union sigval val;
 			val.sival_int = 0; 
 			sigqueue(pid,SIGUSR2,val);
-			usleep(100);
 			i--;
-			printf("%d\n",i);
 		}
 		wait(NULL);
 	}
