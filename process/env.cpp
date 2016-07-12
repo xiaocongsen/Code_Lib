@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 int main()
 {
 	const char *setname = "XIAO"; //设置键值名
